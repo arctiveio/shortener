@@ -1,9 +1,8 @@
 package main
 
 import (
-	"shortener/handlers"
-
 	"github.com/Simversity/gottp"
+	"github.com/Simversity/shortener/handlers"
 )
 
 var Urls = []*gottp.Url{

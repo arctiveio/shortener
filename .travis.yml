@@ -1,0 +1,12 @@
+language: go
+
+go:
+    - tip
+
+install:
+    - go get code.google.com/p/gcfg
+    - go get github.com/Simversity/gottp
+    - go get github.com/HouzuoGuo/tiedot
+
+script:
+    - go build -v ./...
