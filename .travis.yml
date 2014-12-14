@@ -4,10 +4,6 @@ go:
     - tip
 
 install:
-    - mkdir -p $HOME/gopath/src/shortener
-    - rsync -az ${TRAVIS_BUILD_DIR}/ $HOME/gopath/src/shortener/
-    - export TRAVIS_BUILD_DIR=$HOME/gopath/src/shortener
-    - cd $HOME/gopath/src/shortener
     - go get code.google.com/p/gcfg
     - go get github.com/Simversity/gottp
     - go get github.com/HouzuoGuo/tiedot
