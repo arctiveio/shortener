@@ -3,13 +3,13 @@ package handlers
 import (
 	"net/http"
 	"net/url"
-	"shortener/db"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/Simversity/gottp"
+	"github.com/Simversity/shortener/db"
 )
 
 var mutex sync.Mutex
