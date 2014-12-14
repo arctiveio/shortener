@@ -3,7 +3,7 @@ language: go
 go:
     - tip
 
-before_install:
+install:
     - mkdir -p $HOME/gopath/src/shortener
     - rsync -az ${TRAVIS_BUILD_DIR}/ $HOME/gopath/src/shortener/
     - export TRAVIS_BUILD_DIR=$HOME/gopath/src/shortener
