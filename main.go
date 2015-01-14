@@ -12,10 +12,6 @@ func sysInit() {
 	db.InitDB(Settings.Shortener.StoragePath)
 }
 
-func init() {
-	gottp.BindHandlers(Urls)
-}
-
 func main() {
 	go sysInit()
 	gottp.MakeServer(&Settings)

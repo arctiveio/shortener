@@ -5,7 +5,7 @@ import (
 	"github.com/Simversity/shortener/handlers"
 )
 
-var Urls = []*gottp.Url{
-	gottp.NewUrl("shorten", "/shorten/?$", handlers.Shortener),
-	gottp.NewUrl("redirect", "/\\w{6,10}/?$", handlers.Redirect),
+func init() {
+	gottp.NewUrl("shorten", "/shorten/?$", new(handlers.Shortener))
+	gottp.NewUrl("redirect", "/\\w{6,10}/?$", new(handlers.Redirect))
 }
