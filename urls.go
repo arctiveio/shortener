@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Simversity/gottp"
+	"gopkg.in/simversity/gottp.v1"
 	"github.com/Simversity/shortener/handlers"
 )
 

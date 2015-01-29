@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Simversity/gottp"
+	"gopkg.in/simversity/gottp.v1"
 	"github.com/Simversity/shortener/db"
 )
 
