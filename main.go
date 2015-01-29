@@ -3,17 +3,13 @@
 package main
 
 import (
-	"github.com/Simversity/gottp"
+	"gopkg.in/simversity/gottp.v1"
 	"github.com/Simversity/shortener/db"
 )
 
 func sysInit() {
 	<-(gottp.SysInitChan)
 	db.InitDB(Settings.Shortener.StoragePath)
-}
-
-func init() {
-	gottp.BindHandlers(Urls)
 }
 
 func main() {

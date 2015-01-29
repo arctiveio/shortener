@@ -1,6 +1,6 @@
 package main
 
-import conf "github.com/Simversity/gottp/conf"
+import conf "gopkg.in/simversity/gottp.v1/conf"
 
 const baseConfig = `;Sample Configuration File
 [gottp]

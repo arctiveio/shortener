@@ -8,13 +8,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Simversity/gottp"
+	"gopkg.in/simversity/gottp.v1"
 	"github.com/Simversity/shortener/db"
 )
 
 var mutex sync.Mutex
 
-func Redirect(req *gottp.Request) {
+type Redirect struct {
+	gottp.BaseHandler
+}
+
+func (self *Redirect) Get(req *gottp.Request) {
 	shortkey := req.Request.URL.String()
 
 	if strings.HasPrefix(shortkey, "/") {
@@ -84,7 +88,11 @@ func CreateLink(url_object *db.UrlModel) {
 	}
 }
 
-func Shortener(req *gottp.Request) {
+type Shortener struct {
+	gottp.BaseHandler
+}
+
+func (self *Shortener) Post(req *gottp.Request) {
 	arg_url := (*req.GetArguments())["url"]
 
 	if arg_url == nil {
