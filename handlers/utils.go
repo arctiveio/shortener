@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"gopkg.in/simversity/gottp.v1"
 	"github.com/Simversity/shortener/db"
+	"gopkg.in/simversity/gottp.v1"
 )
 
 var mutex sync.Mutex
