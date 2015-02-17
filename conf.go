@@ -4,7 +4,7 @@ import conf "gopkg.in/simversity/gottp.v1/conf"
 
 const baseConfig = `;Sample Configuration File
 [gottp]
-listen="/tmp/shortener.sock"
+listen="0.0.0.0:6000"
 EmailHost=""
 EmailPort=""
 EmailPassword=""
