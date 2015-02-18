@@ -13,7 +13,7 @@ const collectionName = "short_url"
 var indexes = []string{"short_url", "url"}
 
 type UrlModel struct {
-	Url      string `json:"url"`
+	Url      string `json:"url" required:"true"`
 	ShortUrl string `json:"short_url"`
 }
 
