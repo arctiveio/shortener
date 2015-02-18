@@ -4,7 +4,7 @@ import conf "gopkg.in/simversity/gottp.v1/conf"
 
 const baseConfig = `;Sample Configuration File
 [gottp]
-listen="0.0.0.0:6000"
+listen="0.0.0.0:9010"
 EmailHost=""
 EmailPort=""
 EmailPassword=""
