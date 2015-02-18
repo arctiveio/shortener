@@ -5,7 +5,7 @@ go:
 
 install:
     - go get code.google.com/p/gcfg
-    - go get gopkg.in/simversity/gottp.v1
+    - go get gopkg.in/simversity/gottp.v2
     - go get github.com/HouzuoGuo/tiedot
 
 script:
