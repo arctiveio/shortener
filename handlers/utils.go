@@ -8,11 +8,23 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Simversity/shortener/db"
 	"gopkg.in/simversity/gottp.v1"
+	"gopkg.in/simversity/gottp.v1/utils"
+	"gopkg.in/simversity/shortener.v1/db"
 )
 
 var mutex sync.Mutex
+
+func ConcatenateErrors(errs *[]error) string {
+	var errString string
+	for i := 0; i < len(*errs); i++ {
+		errString += (*errs)[i].Error()
+		if (len(*errs) - i) > 1 {
+			errString += ","
+		}
+	}
+	return errString
+}
 
 type Redirect struct {
 	gottp.BaseHandler
@@ -93,22 +105,17 @@ type Shortener struct {
 }
 
 func (self *Shortener) Post(req *gottp.Request) {
-	arg_url := (*req.GetArguments())["url"]
+	shortenRequest := new(db.UrlModel)
+	req.ConvertArguments(shortenRequest)
 
-	if arg_url == nil {
-		e := gottp.HttpError{412, "URL Not found"}
+	errors := utils.Validate(shortenRequest)
+	if len(*errors) > 0 {
+		e := gottp.HttpError{http.StatusNotImplemented, ConcatenateErrors(errors)}
 		req.Raise(e)
 		return
 	}
 
-	a_url, _ := arg_url.(string)
-	if a_url == "" {
-		e := gottp.HttpError{412, "URL Not found"}
-		req.Raise(e)
-		return
-	}
-
-	parsed_url, parse_err := url.Parse(a_url)
+	parsed_url, parse_err := url.Parse(shortenRequest.Url)
 	if parse_err != nil {
 		e := gottp.HttpError{412, parse_err.Error()}
 		req.Raise(e)
@@ -122,11 +129,10 @@ func (self *Shortener) Post(req *gottp.Request) {
 	}
 
 	if !strings.HasPrefix(parsed_url.Scheme, "http") {
-		a_url = "http://" + a_url
+		shortenRequest.Url = "http://" + shortenRequest.Url
 	}
 
-	url_object := db.UrlModel{Url: a_url}
-	CreateLink(&url_object)
+	CreateLink(shortenRequest)
 
 	var short_host string
 	short_host_arg := (*req.GetArguments())["shortener_host"]
@@ -138,7 +144,7 @@ func (self *Shortener) Post(req *gottp.Request) {
 		short_host = "http://" + req.Request.Host
 	}
 
-	url_object.ShortUrl = short_host + "/" + url_object.ShortUrl
-	req.Write(url_object)
+	shortenRequest.ShortUrl = short_host + "/" + shortenRequest.ShortUrl
+	req.Write(shortenRequest)
 	return
 }
