@@ -1,11 +1,8 @@
 package main
 
-import (
-	"gopkg.in/simversity/gottp.v1"
-	"gopkg.in/simversity/shortener.v1/handlers"
-)
+import "gopkg.in/simversity/gottp.v1"
 
 func init() {
-	gottp.NewUrl("shorten", "/shorten/?$", new(handlers.Shortener))
-	gottp.NewUrl("redirect", "/\\w{6,10}/?$", new(handlers.Redirect))
+	gottp.NewUrl("shorten", "/shorten/?$", new(ShortenerHandler))
+	gottp.NewUrl("redirect", "/\\w{6,10}/?$", new(RedirectHandler))
 }

@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"net/http"
@@ -10,7 +10,6 @@ import (
 
 	"gopkg.in/simversity/gottp.v1"
 	"gopkg.in/simversity/gottp.v1/utils"
-	"gopkg.in/simversity/shortener.v1/db"
 )
 
 var mutex sync.Mutex
@@ -26,11 +25,11 @@ func ConcatenateErrors(errs *[]error) string {
 	return errString
 }
 
-type Redirect struct {
+type RedirectHandler struct {
 	gottp.BaseHandler
 }
 
-func (self *Redirect) Get(req *gottp.Request) {
+func (self *RedirectHandler) Get(req *gottp.Request) {
 	shortkey := req.Request.URL.String()
 
 	if strings.HasPrefix(shortkey, "/") {
@@ -45,9 +44,9 @@ func (self *Redirect) Get(req *gottp.Request) {
 		shortkey = strings.TrimLeft(shortkey, "/")
 	}
 
-	actual_entity := db.UrlModel{}
+	actual_entity := UrlModel{}
 
-	err := db.GetOne("short_url", shortkey, &actual_entity)
+	err := GetOne("short_url", shortkey, &actual_entity)
 	if err != nil {
 		e := gottp.HttpError{404, "/" + shortkey + " not Found"}
 		req.Raise(e)
@@ -72,8 +71,8 @@ func createShortString() string {
 	return strconv.FormatInt(t1, 36)
 }
 
-func CreateLink(url_object *db.UrlModel) {
-	err := db.GetOne("url", url_object.Url, url_object)
+func CreateLink(url_object *UrlModel) {
+	err := GetOne("url", url_object.Url, url_object)
 	if err == nil {
 		return
 	}
@@ -85,7 +84,7 @@ func CreateLink(url_object *db.UrlModel) {
 		short_url := createShortString()
 
 		for true {
-			if db.Count("short_url", short_url) == 0 {
+			if Count("short_url", short_url) == 0 {
 				break
 			} else {
 				short_url = createShortString()
@@ -100,12 +99,12 @@ func CreateLink(url_object *db.UrlModel) {
 	}
 }
 
-type Shortener struct {
+type ShortenerHandler struct {
 	gottp.BaseHandler
 }
 
-func (self *Shortener) Post(req *gottp.Request) {
-	shortenRequest := new(db.UrlModel)
+func (self *ShortenerHandler) Post(req *gottp.Request) {
+	shortenRequest := new(UrlModel)
 	req.ConvertArguments(shortenRequest)
 
 	errors := utils.Validate(shortenRequest)

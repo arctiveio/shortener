@@ -2,14 +2,11 @@
 
 package main
 
-import (
-	"gopkg.in/simversity/gottp.v1"
-	"gopkg.in/simversity/shortener.v1/db"
-)
+import "gopkg.in/simversity/gottp.v1"
 
 func sysInit() {
 	<-(gottp.SysInitChan)
-	db.InitDB(Settings.Shortener.StoragePath)
+	InitDB(Settings.Shortener.StoragePath)
 }
 
 func main() {
