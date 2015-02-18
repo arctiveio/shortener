@@ -2,7 +2,7 @@
 
 package main
 
-import "gopkg.in/simversity/gottp.v1"
+import "gopkg.in/simversity/gottp.v2"
 
 func sysInit() {
 	<-(gottp.SysInitChan)
