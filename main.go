@@ -4,7 +4,7 @@ package main
 
 import (
 	"gopkg.in/simversity/gottp.v1"
-	"github.com/Simversity/shortener/db"
+	"gopkg.in/simversity/shortener.v1/db"
 )
 
 func sysInit() {
